@@ -3,9 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Days of Week - Visual Calendar", "Days of Week - Visual Calendar", "{A4FFB62D-A95C-4848-94AA-C40A13627E9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaysOfWeek-VisualCalendar", "DaysOfWeek-VisualCalendar\DaysOfWeek-VisualCalendar.csproj", "{0E7388A0-C802-4BE7-A1E7-C24F3B93E6F4}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E7388A0-C802-4BE7-A1E7-C24F3B93E6F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E7388A0-C802-4BE7-A1E7-C24F3B93E6F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E7388A0-C802-4BE7-A1E7-C24F3B93E6F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E7388A0-C802-4BE7-A1E7-C24F3B93E6F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0E7388A0-C802-4BE7-A1E7-C24F3B93E6F4} = {A4FFB62D-A95C-4848-94AA-C40A13627E9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {84939752-8ECA-4521-A3B4-A4F5235B2DC6}
