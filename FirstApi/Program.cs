@@ -1,26 +1,62 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FirstApi.Context;
+using FirstApi.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace FirstApi
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddEndpointsApiExplorer();
+
+string connectionString = ""; //appsettings.json
+
+builder.Services.AddDbContext<Context>
+    (options => options
+    .UseSqlServer(connectionString));
+
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+app.UseSwagger();
+
+app.MapPost("AddProduct", async (Product product, Context context) =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    context.Product.Add(product);
+    await context.SaveChangesAsync();
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+app.MapPost("SelectProduct/{id}", async (int id, Context context) =>
+{
+    return await context.Product.FirstOrDefaultAsync(p => p.Id == id);
+});
+
+app.MapGet("ListProduct", async (Context context) =>
+{
+    return await context.Product.ToListAsync();
+});
+
+app.MapPut("EditProduct", async (int id, Product product, Context context) =>
+{
+    var productEdit = await context.Product.FirstOrDefaultAsync(p => p.Id == id);
+
+    if(productEdit != null)
+    {
+        productEdit.Name = product.Name;
+
+        context.Product.Update(productEdit);
+        await context.SaveChangesAsync();
     }
-}
+});
+
+app.MapDelete("DeleteProduct/{id}", async (int id, Context context) =>
+{
+    var productDelete = await context.Product.FirstOrDefaultAsync(p => p.Id == id);
+
+    if (productDelete != null)
+    {
+        context.Product.Remove(productDelete);
+        await context.SaveChangesAsync();
+    }
+});
+
+app.UseSwaggerUI();
+app.Run();
