@@ -6,7 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 
-string connectionString = ""; //appsettings.json
+IConfigurationRoot configuration = new ConfigurationBuilder()
+    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+string connectionString = configuration.GetConnectionString("SqlServer");
 
 builder.Services.AddDbContext<Context>
     (options => options
@@ -38,7 +43,7 @@ app.MapPut("EditProduct", async (int id, Product product, Context context) =>
 {
     var productEdit = await context.Product.FirstOrDefaultAsync(p => p.Id == id);
 
-    if(productEdit != null)
+    if (productEdit != null)
     {
         productEdit.Name = product.Name;
 
